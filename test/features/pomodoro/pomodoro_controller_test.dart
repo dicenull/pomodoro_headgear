@@ -14,4 +14,16 @@ void main() {
       PomodoroStatus.rest,
     );
   });
+
+  test('ポモドーロを開始すると、作業中状態になる', () {
+    final container = createContainer();
+    final subsc = container.listen(pomodoroControllerProvider, (_, __) {});
+
+    container.read(pomodoroControllerProvider.notifier).start();
+
+    expect(
+      subsc.read().status,
+      PomodoroStatus.work,
+    );
+  });
 }

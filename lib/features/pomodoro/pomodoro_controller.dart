@@ -9,4 +9,6 @@ class PomodoroController extends _$PomodoroController {
   PomodoroState build() {
     return PomodoroState();
   }
+
+  void start() {}
 }
