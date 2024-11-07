@@ -10,5 +10,7 @@ class PomodoroController extends _$PomodoroController {
     return PomodoroState();
   }
 
-  void start() {}
+  void start() {
+    state = state.copyWith(status: PomodoroStatus.work);
+  }
 }
