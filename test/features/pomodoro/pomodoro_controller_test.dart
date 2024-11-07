@@ -1,5 +1,6 @@
 import 'package:app/features/pomodoro/pomodoro_controller.dart';
 import 'package:app/features/pomodoro/pomodoro_state.dart';
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../create_container_test.dart';
@@ -25,5 +26,19 @@ void main() {
       subsc.read().status,
       PomodoroStatus.work,
     );
+  });
+
+  test('作業中から25分後に、ポモドーロが完了する', () {
+    fakeAsync((clock) {
+      final container = createContainer();
+      final subsc = container.listen(pomodoroControllerProvider, (_, __) {});
+
+      final controller = container.read(pomodoroControllerProvider.notifier);
+
+      controller.start();
+      clock.elapse(const Duration(minutes: 25, seconds: 1));
+
+      expect(subsc.read().status, PomodoroStatus.shortBreak);
+    });
   });
 }
