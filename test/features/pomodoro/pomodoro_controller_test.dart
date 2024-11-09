@@ -35,12 +35,48 @@ void main() {
     );
   });
 
+  test('作業中から24分後には、作業中のまま', () {
+    fakeAsync((clock) {
+      final (subsc, controller) = buildSut();
+
+      controller.start();
+      clock.elapse(const Duration(minutes: 24));
+
+      expect(subsc.read().status, PomodoroStatus.work);
+    });
+  });
+
   test('作業中から25分後に、ポモドーロが完了する', () {
     fakeAsync((clock) {
       final (subsc, controller) = buildSut();
 
       controller.start();
       clock.elapse(const Duration(minutes: 25));
+
+      expect(subsc.read().status, PomodoroStatus.shortBreak);
+    });
+  });
+
+  test('ポモドーロ完了から5分後に、ポモドーロが作業中になる', () {
+    fakeAsync((clock) {
+      final (subsc, controller) = buildSut();
+
+      controller.start();
+      clock
+        ..elapse(const Duration(minutes: 25))
+        ..elapse(const Duration(minutes: 5));
+
+      expect(subsc.read().status, PomodoroStatus.work);
+    });
+  });
+
+  test('ポモドーロ開始して85分後に、ポモドーロが小休憩になる', () {
+    fakeAsync((clock) {
+      final (subsc, controller) = buildSut();
+
+      controller.start();
+
+      clock.elapse(const Duration(minutes: 85));
 
       expect(subsc.read().status, PomodoroStatus.shortBreak);
     });
