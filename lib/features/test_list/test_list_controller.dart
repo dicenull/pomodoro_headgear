@@ -22,5 +22,7 @@ class TestListController extends _$TestListController {
     ];
   }
 
-  void remove(TestState first) {}
+  void remove(TestState item) {
+    state = state.where((e) => e.id != item.id).toList();
+  }
 }
