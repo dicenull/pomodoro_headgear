@@ -8,6 +8,16 @@ class PomodoroState with _$PomodoroState {
     required int remainingSeconds,
     required PomodoroStatus status,
   }) = _PomodoroState;
+
+  const PomodoroState._();
+
+  String get time {
+    final sign = remainingSeconds < 0 ? '-' : '';
+    final v = remainingSeconds.abs();
+    final m = (v ~/ 60).toString().padLeft(2, '0');
+    final s = (v % 60).toString().padLeft(2, '0');
+    return '$sign$m:$s';
+  }
 }
 
 enum PomodoroStatus {

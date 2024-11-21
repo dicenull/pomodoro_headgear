@@ -108,8 +108,9 @@ class __$$PomodoroStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PomodoroStateImpl implements _PomodoroState {
-  _$PomodoroStateImpl({required this.remainingSeconds, required this.status});
+class _$PomodoroStateImpl extends _PomodoroState {
+  _$PomodoroStateImpl({required this.remainingSeconds, required this.status})
+      : super._();
 
   @override
   final int remainingSeconds;
@@ -143,10 +144,11 @@ class _$PomodoroStateImpl implements _PomodoroState {
       __$$PomodoroStateImplCopyWithImpl<_$PomodoroStateImpl>(this, _$identity);
 }
 
-abstract class _PomodoroState implements PomodoroState {
+abstract class _PomodoroState extends PomodoroState {
   factory _PomodoroState(
       {required final int remainingSeconds,
       required final PomodoroStatus status}) = _$PomodoroStateImpl;
+  _PomodoroState._() : super._();
 
   @override
   int get remainingSeconds;

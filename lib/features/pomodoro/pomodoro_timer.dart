@@ -17,6 +17,7 @@ class PomodoroTimer extends HookConsumerWidget {
       children: [
         Text(status.label),
         const Gap(16),
+        const _Timer(),
         IconButton.filled(
           onPressed: () {
             if (status == PomodoroStatus.rest) {
@@ -34,5 +35,16 @@ class PomodoroTimer extends HookConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+class _Timer extends ConsumerWidget {
+  const _Timer();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final seconds = ref.watch(pomodoroControllerProvider.select((v) => v.time));
+
+    return Text(seconds);
   }
 }
