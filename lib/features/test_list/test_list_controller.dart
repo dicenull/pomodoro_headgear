@@ -10,5 +10,7 @@ class TestListController extends _$TestListController {
     return [];
   }
 
-  void add(String s) {}
+  void add(String s) {
+    state = [...state, TestState(title: s, status: TestStatus.todo)];
+  }
 }
