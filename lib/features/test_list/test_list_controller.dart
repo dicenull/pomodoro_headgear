@@ -21,4 +21,6 @@ class TestListController extends _$TestListController {
       ),
     ];
   }
+
+  void remove(TestState first) {}
 }

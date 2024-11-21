@@ -24,4 +24,18 @@ void main() {
     expect(subsc.read().first.status, TestStatus.todo);
     expect(subsc.read().first.id, isNotEmpty);
   });
+
+  test('テストを削除できる', () {
+    final (subsc, controller) = buildSut();
+
+    controller
+      ..add('足し算ができる')
+      ..add('引き算ができる');
+
+    final removeItem = subsc.read().first;
+    controller.remove(removeItem);
+
+    expect(subsc.read().length, 1);
+    expect(subsc.read().first.title, '引き算ができる');
+  });
 }
