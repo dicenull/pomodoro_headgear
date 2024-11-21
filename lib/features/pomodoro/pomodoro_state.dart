@@ -15,5 +15,17 @@ class PomodoroState with _$PomodoroState {
 enum PomodoroStatus {
   rest,
   work,
-  shortBreak,
+  shortBreak;
+
+  String get label => switch (this) {
+        PomodoroStatus.rest => 'お休み',
+        PomodoroStatus.work => '作業',
+        PomodoroStatus.shortBreak => '小休憩',
+      };
+
+  int get duration => switch (this) {
+        PomodoroStatus.rest => 0,
+        PomodoroStatus.work => 25 * 60,
+        PomodoroStatus.shortBreak => 5 * 60,
+      };
 }
