@@ -7,7 +7,7 @@ part of 'pomodoro_controller.dart';
 // **************************************************************************
 
 String _$pomodoroControllerHash() =>
-    r'62189ed2bc21139a764a78f2b7b3fa79573580e6';
+    r'0784d0c0aab8944479a14a892ee4b728e8848907';
 
 /// See also [PomodoroController].
 @ProviderFor(PomodoroController)

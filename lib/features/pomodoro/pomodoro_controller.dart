@@ -7,22 +7,65 @@ part 'pomodoro_controller.g.dart';
 
 @riverpod
 class PomodoroController extends _$PomodoroController {
+  Timer? _countTimer;
+  Timer? _completeTimer;
+
   @override
   PomodoroState build() {
-    return PomodoroState();
+    ref.onDispose(() {
+      _countTimer?.cancel();
+      _completeTimer?.cancel();
+    });
+
+    return PomodoroState(
+      remainingSeconds: PomodoroStatus.rest.duration,
+      status: PomodoroStatus.rest,
+    );
+  }
+
+  void rest() {
+    state = state.copyWith(
+      remainingSeconds: PomodoroStatus.rest.duration,
+      status: PomodoroStatus.rest,
+    );
+
+    _countTimer?.cancel();
+    _completeTimer?.cancel();
   }
 
   void start() {
     state = state.copyWith(
+      remainingSeconds: PomodoroStatus.work.duration,
       status: PomodoroStatus.work,
-      timer: Timer(const Duration(minutes: 25), onWorkComplete),
     );
+
+    _countTimer?.cancel();
+    _completeTimer?.cancel();
+
+    _completeTimer = Timer(
+      Duration(seconds: state.remainingSeconds),
+      onWorkComplete,
+    );
+    _countTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      state = state.copyWith(remainingSeconds: state.remainingSeconds - 1);
+    });
   }
 
   void onWorkComplete() {
     state = state.copyWith(
+      remainingSeconds: PomodoroStatus.shortBreak.duration,
       status: PomodoroStatus.shortBreak,
-      timer: Timer(const Duration(minutes: 5), start),
     );
+
+    _countTimer?.cancel();
+    _completeTimer?.cancel();
+
+    _completeTimer = Timer(
+      Duration(seconds: state.remainingSeconds),
+      start,
+    );
+    _countTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      state = state.copyWith(remainingSeconds: state.remainingSeconds - 1);
+    });
   }
 }

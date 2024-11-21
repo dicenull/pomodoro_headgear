@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PomodoroState {
-  Timer? get timer => throw _privateConstructorUsedError;
+  int get remainingSeconds => throw _privateConstructorUsedError;
   PomodoroStatus get status => throw _privateConstructorUsedError;
 
   /// Create a copy of PomodoroState
@@ -32,7 +32,7 @@ abstract class $PomodoroStateCopyWith<$Res> {
           PomodoroState value, $Res Function(PomodoroState) then) =
       _$PomodoroStateCopyWithImpl<$Res, PomodoroState>;
   @useResult
-  $Res call({Timer? timer, PomodoroStatus status});
+  $Res call({int remainingSeconds, PomodoroStatus status});
 }
 
 /// @nodoc
@@ -50,14 +50,14 @@ class _$PomodoroStateCopyWithImpl<$Res, $Val extends PomodoroState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timer = freezed,
+    Object? remainingSeconds = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
-      timer: freezed == timer
-          ? _value.timer
-          : timer // ignore: cast_nullable_to_non_nullable
-              as Timer?,
+      remainingSeconds: null == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,7 @@ abstract class _$$PomodoroStateImplCopyWith<$Res>
       __$$PomodoroStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Timer? timer, PomodoroStatus status});
+  $Res call({int remainingSeconds, PomodoroStatus status});
 }
 
 /// @nodoc
@@ -90,14 +90,14 @@ class __$$PomodoroStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timer = freezed,
+    Object? remainingSeconds = null,
     Object? status = null,
   }) {
     return _then(_$PomodoroStateImpl(
-      timer: freezed == timer
-          ? _value.timer
-          : timer // ignore: cast_nullable_to_non_nullable
-              as Timer?,
+      remainingSeconds: null == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -109,17 +109,16 @@ class __$$PomodoroStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PomodoroStateImpl implements _PomodoroState {
-  _$PomodoroStateImpl({this.timer, this.status = PomodoroStatus.rest});
+  _$PomodoroStateImpl({required this.remainingSeconds, required this.status});
 
   @override
-  final Timer? timer;
+  final int remainingSeconds;
   @override
-  @JsonKey()
   final PomodoroStatus status;
 
   @override
   String toString() {
-    return 'PomodoroState(timer: $timer, status: $status)';
+    return 'PomodoroState(remainingSeconds: $remainingSeconds, status: $status)';
   }
 
   @override
@@ -127,12 +126,13 @@ class _$PomodoroStateImpl implements _PomodoroState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PomodoroStateImpl &&
-            (identical(other.timer, timer) || other.timer == timer) &&
+            (identical(other.remainingSeconds, remainingSeconds) ||
+                other.remainingSeconds == remainingSeconds) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, timer, status);
+  int get hashCode => Object.hash(runtimeType, remainingSeconds, status);
 
   /// Create a copy of PomodoroState
   /// with the given fields replaced by the non-null parameter values.
@@ -144,11 +144,12 @@ class _$PomodoroStateImpl implements _PomodoroState {
 }
 
 abstract class _PomodoroState implements PomodoroState {
-  factory _PomodoroState({final Timer? timer, final PomodoroStatus status}) =
-      _$PomodoroStateImpl;
+  factory _PomodoroState(
+      {required final int remainingSeconds,
+      required final PomodoroStatus status}) = _$PomodoroStateImpl;
 
   @override
-  Timer? get timer;
+  int get remainingSeconds;
   @override
   PomodoroStatus get status;
 
