@@ -43,6 +43,7 @@ void main() {
       clock.elapse(const Duration(minutes: 24));
 
       expect(subsc.read().status, PomodoroStatus.work);
+      expect(subsc.read().remainingSeconds, 60);
     });
   });
 
@@ -54,6 +55,7 @@ void main() {
       clock.elapse(const Duration(minutes: 25));
 
       expect(subsc.read().status, PomodoroStatus.shortBreak);
+      expect(subsc.read().remainingSeconds, 300);
     });
   });
 
@@ -67,6 +69,7 @@ void main() {
         ..elapse(const Duration(minutes: 5));
 
       expect(subsc.read().status, PomodoroStatus.work);
+      expect(subsc.read().remainingSeconds, 1500);
     });
   });
 
@@ -79,6 +82,7 @@ void main() {
       clock.elapse(const Duration(minutes: 85));
 
       expect(subsc.read().status, PomodoroStatus.shortBreak);
+      expect(subsc.read().remainingSeconds, 300);
     });
   });
 }
