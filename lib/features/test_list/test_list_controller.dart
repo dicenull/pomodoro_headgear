@@ -1,3 +1,4 @@
+import 'package:app/features/identifier/identifier_provider.dart';
 import 'package:app/features/test_list/test_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,6 +12,13 @@ class TestListController extends _$TestListController {
   }
 
   void add(String s) {
-    state = [...state, TestState(title: s, status: TestStatus.todo)];
+    state = [
+      ...state,
+      TestState(
+        id: ref.read(uuidProvider).v4(),
+        title: s,
+        status: TestStatus.todo,
+      ),
+    ];
   }
 }
