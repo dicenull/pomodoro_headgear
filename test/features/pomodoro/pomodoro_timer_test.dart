@@ -52,4 +52,36 @@ void main() {
     await tester.pumpAndSettle();
     container.dispose();
   });
+
+  testWidgets('ポモドーロ作業中に残り時間が表示される', (tester) async {
+    final container = createContainer();
+    final widget = createTestWidget(container, const PomodoroTimer());
+
+    await tester.pumpWidget(widget);
+
+    await tester.tap(find.bySemanticsLabel('開始'));
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(minutes: 5));
+
+    expect(find.text('20:00'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    container.dispose();
+  });
+
+  testWidgets('ポモドーロ休憩中に残り時間が表示される', (tester) async {
+    final container = createContainer();
+    final widget = createTestWidget(container, const PomodoroTimer());
+
+    await tester.pumpWidget(widget);
+
+    await tester.tap(find.bySemanticsLabel('開始'));
+    await tester.pumpAndSettle();
+    await tester.pump(const Duration(minutes: 27));
+
+    expect(find.text('03:00'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    container.dispose();
+  });
 }
