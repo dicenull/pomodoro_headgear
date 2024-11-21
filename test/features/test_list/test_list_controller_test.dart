@@ -22,5 +22,6 @@ void main() {
     expect(subsc.read().length, 1);
     expect(subsc.read().first.title, '足し算ができる');
     expect(subsc.read().first.status, TestStatus.todo);
+    expect(subsc.read().first.id, isNotEmpty);
   });
 }

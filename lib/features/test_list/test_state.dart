@@ -5,6 +5,7 @@ part 'test_state.freezed.dart';
 @freezed
 abstract class TestState with _$TestState {
   factory TestState({
+    required String id,
     required String title,
     required TestStatus status,
   }) = _TestState;

@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TestState {
+  String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   TestStatus get status => throw _privateConstructorUsedError;
 
@@ -31,7 +32,7 @@ abstract class $TestStateCopyWith<$Res> {
   factory $TestStateCopyWith(TestState value, $Res Function(TestState) then) =
       _$TestStateCopyWithImpl<$Res, TestState>;
   @useResult
-  $Res call({String title, TestStatus status});
+  $Res call({String id, String title, TestStatus status});
 }
 
 /// @nodoc
@@ -49,10 +50,15 @@ class _$TestStateCopyWithImpl<$Res, $Val extends TestState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -73,7 +79,7 @@ abstract class _$$TestStateImplCopyWith<$Res>
       __$$TestStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, TestStatus status});
+  $Res call({String id, String title, TestStatus status});
 }
 
 /// @nodoc
@@ -89,10 +95,15 @@ class __$$TestStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? status = null,
   }) {
     return _then(_$TestStateImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -108,8 +119,11 @@ class __$$TestStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TestStateImpl implements _TestState {
-  _$TestStateImpl({required this.title, required this.status});
+  _$TestStateImpl(
+      {required this.id, required this.title, required this.status});
 
+  @override
+  final String id;
   @override
   final String title;
   @override
@@ -117,7 +131,7 @@ class _$TestStateImpl implements _TestState {
 
   @override
   String toString() {
-    return 'TestState(title: $title, status: $status)';
+    return 'TestState(id: $id, title: $title, status: $status)';
   }
 
   @override
@@ -125,12 +139,13 @@ class _$TestStateImpl implements _TestState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TestStateImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, status);
+  int get hashCode => Object.hash(runtimeType, id, title, status);
 
   /// Create a copy of TestState
   /// with the given fields replaced by the non-null parameter values.
@@ -143,9 +158,12 @@ class _$TestStateImpl implements _TestState {
 
 abstract class _TestState implements TestState {
   factory _TestState(
-      {required final String title,
+      {required final String id,
+      required final String title,
       required final TestStatus status}) = _$TestStateImpl;
 
+  @override
+  String get id;
   @override
   String get title;
   @override
