@@ -7,7 +7,7 @@ part of 'test_list_controller.dart';
 // **************************************************************************
 
 String _$testListControllerHash() =>
-    r'1665bbbaf8cc8d82f71df93ba71159744ace6c22';
+    r'4c317c706123d4f5f5b1de5e47178042be7a724b';
 
 /// See also [TestListController].
 @ProviderFor(TestListController)

@@ -26,9 +26,27 @@ class TestListController extends _$TestListController {
     state = state.where((e) => e.id != item.id).toList();
   }
 
-  void edit(String editId, {required String title}) {}
+  void edit(String editId, {required String title}) {
+    state = [
+      for (final item in state)
+        if (item.id == editId) item.copyWith(title: title) else item,
+    ];
+  }
 
-  void doingFrom(String editId) {}
+  void doingFrom(String editId) {
+    state = [
+      for (final item in state)
+        if (item.id == editId)
+          item.copyWith(status: TestStatus.doing)
+        else
+          item,
+    ];
+  }
 
-  void doneFrom(String editId) {}
+  void doneFrom(String editId) {
+    state = [
+      for (final item in state)
+        if (item.id == editId) item.copyWith(status: TestStatus.done) else item,
+    ];
+  }
 }
