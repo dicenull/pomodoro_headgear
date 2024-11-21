@@ -25,4 +25,10 @@ class TestListController extends _$TestListController {
   void remove(TestState item) {
     state = state.where((e) => e.id != item.id).toList();
   }
+
+  void edit(String editId, {required String title}) {}
+
+  void doingFrom(String editId) {}
+
+  void doneFrom(String editId) {}
 }

@@ -38,4 +38,42 @@ void main() {
     expect(subsc.read().length, 1);
     expect(subsc.read().first.title, '引き算ができる');
   });
+
+  test('テストタイトルが編集できる', () {
+    final (subsc, controller) = buildSut();
+
+    controller.add('足し算ができる');
+
+    final editId = subsc.read().first.id;
+    controller.edit(editId, title: '掛け算ができる');
+
+    expect(subsc.read().length, 1);
+    expect(subsc.read().first.title, '掛け算ができる');
+  });
+
+  test('テストを進行中にできる', () {
+    final (subsc, controller) = buildSut();
+
+    controller.add('足し算ができる');
+
+    final editId = subsc.read().first.id;
+    controller.doingFrom(editId);
+
+    expect(subsc.read().length, 1);
+    expect(subsc.read().first.status, TestStatus.doing);
+  });
+
+  test('テストを完了にできる', () {
+    final (subsc, controller) = buildSut();
+
+    controller.add('足し算ができる');
+
+    final editId = subsc.read().first.id;
+    controller
+      ..doingFrom(editId)
+      ..doneFrom(editId);
+
+    expect(subsc.read().length, 1);
+    expect(subsc.read().first.status, TestStatus.done);
+  });
 }
