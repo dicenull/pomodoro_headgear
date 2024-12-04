@@ -1,7 +1,7 @@
 # https://pub.dev/packages/pedantic_mono
 include: package:pedantic_mono/analysis_options.yaml
 
-linter: 
+linter:
   rules:
     sort_pub_dependencies: false
 
@@ -16,7 +16,9 @@ analyzer:
     unrelated_type_equality_checks: error
     invalid_annotation_target: ignore
   exclude:
-    - '**/*.g.dart'
-    - '**/*.freezed.dart'
-    - '**/*.gr.dart'
-    - '**/*.generated.dart'
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gr.dart"
+    - "**/*.generated.dart"
+  plugins:
+    - custom_lint
