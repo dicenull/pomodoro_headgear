@@ -46,4 +46,11 @@ class TestListController extends _$TestListController {
         if (item.id == id) item.copyWith(status: TestStatus.done) else item,
     ];
   }
+
+  void todoFrom(String id) {
+    state = [
+      for (final item in state)
+        if (item.id == id) item.copyWith(status: TestStatus.todo) else item,
+    ];
+  }
 }
