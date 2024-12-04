@@ -76,4 +76,18 @@ void main() {
     expect(subsc.read().length, 1);
     expect(subsc.read().first.status, TestStatus.done);
   });
+
+  test('テストをTODOに戻せる', () {
+    final (subsc, controller) = buildSut();
+
+    controller.add('足し算ができる');
+
+    final editId = subsc.read().first.id;
+    controller
+      ..doingFrom(editId)
+      ..todoFrom(editId);
+
+    expect(subsc.read().length, 1);
+    expect(subsc.read().first.status, TestStatus.todo);
+  });
 }
