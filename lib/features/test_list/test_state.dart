@@ -14,5 +14,11 @@ abstract class TestState with _$TestState {
 enum TestStatus {
   todo,
   doing,
-  done,
+  done;
+
+  String get label => switch (this) {
+        TestStatus.todo => 'TODO',
+        TestStatus.doing => 'DOING',
+        TestStatus.done => 'DONE',
+      };
 }
