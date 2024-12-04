@@ -26,5 +26,10 @@ void main() {
 
     expect(find.text('足し算ができる'), findsOneWidget);
     expect(find.text('引き算ができる'), findsOneWidget);
+
+    await expectLater(
+      find.byType(TestListViewer),
+      matchesGoldenFile('golden/$TestListViewer.png'),
+    );
   });
 }
