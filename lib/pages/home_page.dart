@@ -1,4 +1,5 @@
 import 'package:app/features/pomodoro/pomodoro_timer.dart';
+import 'package:app/features/test_list/test_list_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,7 +12,12 @@ class HomePage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('Title'),
       ),
-      body: const PomodoroTimer(),
+      body: const Column(
+        children: [
+          Center(child: PomodoroTimer()),
+          Center(child: TestListViewer()),
+        ],
+      ),
     );
   }
 }
