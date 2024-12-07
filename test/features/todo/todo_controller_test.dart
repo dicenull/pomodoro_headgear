@@ -1,31 +1,31 @@
-import 'package:app/features/test_list/test_list_controller.dart';
-import 'package:app/features/test_list/test_state.dart';
+import 'package:app/features/todo/todo_controller.dart';
+import 'package:app/features/todo/todo_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../create_container_test.dart';
 
 void main() {
-  (ProviderSubscription<List<TestState>>, TestListController) buildSut() {
+  (ProviderSubscription<List<TodoState>>, TodoController) buildSut() {
     final container = createContainer();
-    final subsc = container.listen(testListControllerProvider, (_, __) {});
-    final controller = container.read(testListControllerProvider.notifier);
+    final subsc = container.listen(todoControllerProvider, (_, __) {});
+    final controller = container.read(todoControllerProvider.notifier);
 
     return (subsc, controller);
   }
 
-  test('テストを追加できる', () {
+  test('TODOを追加できる', () {
     final (subsc, controller) = buildSut();
 
     controller.add('足し算ができる');
 
     expect(subsc.read().length, 1);
     expect(subsc.read().first.title, '足し算ができる');
-    expect(subsc.read().first.status, TestStatus.todo);
+    expect(subsc.read().first.status, TodoStatus.todo);
     expect(subsc.read().first.id, isNotEmpty);
   });
 
-  test('テストを削除できる', () {
+  test('TODOを削除できる', () {
     final (subsc, controller) = buildSut();
 
     controller
@@ -39,7 +39,7 @@ void main() {
     expect(subsc.read().first.title, '引き算ができる');
   });
 
-  test('テストタイトルが編集できる', () {
+  test('TODOタイトルが編集できる', () {
     final (subsc, controller) = buildSut();
 
     controller.add('足し算ができる');
@@ -51,7 +51,7 @@ void main() {
     expect(subsc.read().first.title, '掛け算ができる');
   });
 
-  test('テストを進行中にできる', () {
+  test('TODOを進行中にできる', () {
     final (subsc, controller) = buildSut();
 
     controller.add('足し算ができる');
@@ -60,10 +60,10 @@ void main() {
     controller.doingFrom(editId);
 
     expect(subsc.read().length, 1);
-    expect(subsc.read().first.status, TestStatus.doing);
+    expect(subsc.read().first.status, TodoStatus.doing);
   });
 
-  test('テストを完了にできる', () {
+  test('TODOを完了にできる', () {
     final (subsc, controller) = buildSut();
 
     controller.add('足し算ができる');
@@ -74,10 +74,10 @@ void main() {
       ..doneFrom(editId);
 
     expect(subsc.read().length, 1);
-    expect(subsc.read().first.status, TestStatus.done);
+    expect(subsc.read().first.status, TodoStatus.done);
   });
 
-  test('テストをTODOに戻せる', () {
+  test('TODOをTODOに戻せる', () {
     final (subsc, controller) = buildSut();
 
     controller.add('足し算ができる');
@@ -88,10 +88,10 @@ void main() {
       ..todoFrom(editId);
 
     expect(subsc.read().length, 1);
-    expect(subsc.read().first.status, TestStatus.todo);
+    expect(subsc.read().first.status, TodoStatus.todo);
   });
 
-  test('空文字列ではテストを追加できない', () {
+  test('空文字列ではTODOを追加できない', () {
     final (subsc, controller) = buildSut();
 
     controller.add('');

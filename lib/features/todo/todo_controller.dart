@@ -1,13 +1,13 @@
 import 'package:app/features/identifier/identifier_provider.dart';
-import 'package:app/features/test_list/test_state.dart';
+import 'package:app/features/todo/todo_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'test_list_controller.g.dart';
+part 'todo_controller.g.dart';
 
 @riverpod
-class TestListController extends _$TestListController {
+class TodoController extends _$TodoController {
   @override
-  List<TestState> build() {
+  List<TodoState> build() {
     return [];
   }
 
@@ -18,15 +18,15 @@ class TestListController extends _$TestListController {
 
     state = [
       ...state,
-      TestState(
+      TodoState(
         id: ref.read(uuidProvider).v4(),
         title: s,
-        status: TestStatus.todo,
+        status: TodoStatus.todo,
       ),
     ];
   }
 
-  void remove(TestState item) {
+  void remove(TodoState item) {
     state = state.where((e) => e.id != item.id).toList();
   }
 
@@ -40,21 +40,21 @@ class TestListController extends _$TestListController {
   void doingFrom(String id) {
     state = [
       for (final item in state)
-        if (item.id == id) item.copyWith(status: TestStatus.doing) else item,
+        if (item.id == id) item.copyWith(status: TodoStatus.doing) else item,
     ];
   }
 
   void doneFrom(String id) {
     state = [
       for (final item in state)
-        if (item.id == id) item.copyWith(status: TestStatus.done) else item,
+        if (item.id == id) item.copyWith(status: TodoStatus.done) else item,
     ];
   }
 
   void todoFrom(String id) {
     state = [
       for (final item in state)
-        if (item.id == id) item.copyWith(status: TestStatus.todo) else item,
+        if (item.id == id) item.copyWith(status: TodoStatus.todo) else item,
     ];
   }
 }

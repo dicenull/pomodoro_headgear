@@ -1,13 +1,13 @@
-import 'package:app/features/test_list/test_list_viewer.dart';
+import 'package:app/features/todo/todo_viewer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../create_container_test.dart';
 import '../../widget_test_app.dart';
 
 void main() {
-  testWidgets('$TestListViewer テストの追加から完了まで', (tester) async {
+  testWidgets('$ToDoViewer TODOの追加から完了まで', (tester) async {
     final container = createContainer();
-    final widget = createTestWidget(container, const TestListViewer());
+    final widget = createTestWidget(container, const ToDoViewer());
 
     await tester.pumpWidget(widget);
 
@@ -28,8 +28,8 @@ void main() {
     expect(find.text('引き算ができる'), findsOneWidget);
 
     await expectLater(
-      find.byType(TestListViewer),
-      matchesGoldenFile('golden/$TestListViewer.png'),
+      find.byType(ToDoViewer),
+      matchesGoldenFile('golden/$ToDoViewer.png'),
     );
   });
 }
