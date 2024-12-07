@@ -12,6 +12,10 @@ class TestListController extends _$TestListController {
   }
 
   void add(String s) {
+    if (s.trim().isEmpty) {
+      return;
+    }
+
     state = [
       ...state,
       TestState(

@@ -90,4 +90,12 @@ void main() {
     expect(subsc.read().length, 1);
     expect(subsc.read().first.status, TestStatus.todo);
   });
+
+  test('空文字列ではテストを追加できない', () {
+    final (subsc, controller) = buildSut();
+
+    controller.add('');
+
+    expect(subsc.read(), isEmpty);
+  });
 }
