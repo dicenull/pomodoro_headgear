@@ -13,7 +13,10 @@ void headgearController(Ref ref) {
       todoControllerProvider
           .select((v) => v.any((todo) => todo.status == TodoStatus.doing)),
       (_, isAnyDoing) {
-    if (isAnyDoing) {
+    final isRest = ref.read(
+      pomodoroControllerProvider.select((v) => v.status == PomodoroStatus.rest),
+    );
+    if (isAnyDoing && isRest) {
       ref.read(pomodoroControllerProvider.notifier).start();
     }
   });
