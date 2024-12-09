@@ -7,7 +7,7 @@ part of 'headgear_controller.dart';
 // **************************************************************************
 
 String _$headgearControllerHash() =>
-    r'b56ce149ac3f3bbd18c93b8f7ec3d2a7eb7020e0';
+    r'f0e4ef66d8a6a7c1c8898c5c3421d98be351432a';
 
 /// See also [HeadgearController].
 @ProviderFor(HeadgearController)

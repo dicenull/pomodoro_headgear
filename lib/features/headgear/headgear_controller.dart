@@ -24,11 +24,7 @@ class HeadgearController extends _$HeadgearController {
         pomodoroControllerProvider
             .select((v) => v.status == PomodoroStatus.rest), (_, isRest) {
       if (isRest) {
-        ref.read(todoControllerProvider).forEach((todo) {
-          if (todo.status == TodoStatus.doing) {
-            ref.read(todoControllerProvider.notifier).todoFrom(todo.id);
-          }
-        });
+        ref.read(todoControllerProvider.notifier).restAllDoingTodo();
       }
     });
 
