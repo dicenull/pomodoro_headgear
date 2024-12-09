@@ -15,6 +15,7 @@ analyzer:
     invalid_use_of_protected_member: error
     unrelated_type_equality_checks: error
     invalid_annotation_target: ignore
+    cascade_invocations: ignore
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"

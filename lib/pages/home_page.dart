@@ -1,5 +1,6 @@
+import 'package:app/features/headgear/headgear_controller.dart';
 import 'package:app/features/pomodoro/pomodoro_timer.dart';
-import 'package:app/features/test_list/test_list_viewer.dart';
+import 'package:app/features/todo/todo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,6 +9,8 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(headgearControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Title'),
@@ -15,7 +18,7 @@ class HomePage extends HookConsumerWidget {
       body: const Column(
         children: [
           Center(child: PomodoroTimer()),
-          Center(child: TestListViewer()),
+          Center(child: ToDoViewer()),
         ],
       ),
     );

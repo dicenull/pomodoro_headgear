@@ -1,15 +1,15 @@
-import 'package:app/features/test_list/test_list_controller.dart';
-import 'package:app/features/test_list/test_state.dart';
+import 'package:app/features/todo/todo_controller.dart';
+import 'package:app/features/todo/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TestListViewer extends HookConsumerWidget {
-  const TestListViewer({super.key});
+class ToDoViewer extends HookConsumerWidget {
+  const ToDoViewer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final testList = ref.watch(testListControllerProvider);
+    final todoList = ref.watch(todoControllerProvider);
     final textController = useTextEditingController();
     final focusNode = useFocusNode();
 
@@ -22,24 +22,24 @@ class TestListViewer extends HookConsumerWidget {
             focusNode: focusNode,
             decoration: const InputDecoration(labelText: '新しいテスト'),
             onSubmitted: (s) {
-              ref.read(testListControllerProvider.notifier).add(s);
+              ref.read(todoControllerProvider.notifier).add(s);
               textController.clear();
               focusNode.requestFocus();
             },
           ),
-          for (final item in testList) _TestItem(item: item),
+          for (final todo in todoList) _TodoItem(todo: todo),
         ],
       ),
     );
   }
 }
 
-class _TestItem extends HookConsumerWidget {
-  const _TestItem({
-    required this.item,
+class _TodoItem extends HookConsumerWidget {
+  const _TodoItem({
+    required this.todo,
   });
 
-  final TestState item;
+  final TodoState todo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,40 +50,38 @@ class _TestItem extends HookConsumerWidget {
           IconButton(
             icon: Icon(
               semanticLabel: '完了ボタン',
-              switch (item.status) {
-                TestStatus.done => Icons.check_box,
+              switch (todo.status) {
+                TodoStatus.done => Icons.check_box,
                 _ => Icons.check_box_outline_blank,
               },
             ),
             onPressed: () {
-              if (item.status == TestStatus.done) {
-                ref.read(testListControllerProvider.notifier).todoFrom(item.id);
+              if (todo.status == TodoStatus.done) {
+                ref.read(todoControllerProvider.notifier).todoFrom(todo.id);
               } else {
-                ref.read(testListControllerProvider.notifier).doneFrom(item.id);
+                ref.read(todoControllerProvider.notifier).doneFrom(todo.id);
               }
             },
           ),
           _StatusLabel(
-            status: item.status,
+            status: todo.status,
             onTap: () {
-              if (item.status == TestStatus.todo) {
-                ref
-                    .read(testListControllerProvider.notifier)
-                    .doingFrom(item.id);
+              if (todo.status == TodoStatus.todo) {
+                ref.read(todoControllerProvider.notifier).doingFrom(todo.id);
               }
-              if (item.status == TestStatus.doing) {
-                ref.read(testListControllerProvider.notifier).todoFrom(item.id);
+              if (todo.status == TodoStatus.doing) {
+                ref.read(todoControllerProvider.notifier).todoFrom(todo.id);
               }
             },
           ),
         ],
       ),
-      title: switch (item.status) {
-        TestStatus.done => Text(
-            item.title,
+      title: switch (todo.status) {
+        TodoStatus.done => Text(
+            todo.title,
             style: const TextStyle(decoration: TextDecoration.lineThrough),
           ),
-        _ => _InlineEditor(item),
+        _ => _InlineEditor(todo),
       },
     );
   }
@@ -92,7 +90,7 @@ class _TestItem extends HookConsumerWidget {
 class _InlineEditor extends HookConsumerWidget {
   const _InlineEditor(this.item);
 
-  final TestState item;
+  final TodoState item;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -108,12 +106,12 @@ class _InlineEditor extends HookConsumerWidget {
       ),
       onTapOutside: (event) {
         ref
-            .read(testListControllerProvider.notifier)
+            .read(todoControllerProvider.notifier)
             .edit(item.id, title: controller.text);
       },
       onSubmitted: (newValue) {
         ref
-            .read(testListControllerProvider.notifier)
+            .read(todoControllerProvider.notifier)
             .edit(item.id, title: controller.text);
       },
     );
@@ -126,12 +124,12 @@ class _StatusLabel extends StatelessWidget {
     required this.onTap,
   });
 
-  final TestStatus status;
+  final TodoStatus status;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    if (status == TestStatus.done) {
+    if (status == TodoStatus.done) {
       return const SizedBox.shrink();
     }
     return InkWell(
