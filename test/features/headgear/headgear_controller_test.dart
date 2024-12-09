@@ -3,6 +3,7 @@ import 'package:app/features/pomodoro/pomodoro_controller.dart';
 import 'package:app/features/pomodoro/pomodoro_state.dart';
 import 'package:app/features/todo/todo_controller.dart';
 import 'package:app/features/todo/todo_state.dart';
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -28,6 +29,26 @@ void main() {
         container.read(pomodoroControllerProvider).status,
         PomodoroStatus.work,
       );
+    });
+
+    test('休憩中以外にTODOを進行中にしても、ポモドーロは変化しない', () {
+      fakeAsync((time) {
+        final container = buildSut();
+        final todoController = container.read(todoControllerProvider.notifier)
+          ..add('足し算');
+        final todo = container.read(todoControllerProvider).first;
+
+        todoController.doingFrom(todo.id);
+        time.elapse(const Duration(minutes: 10));
+        todoController.todoFrom(todo.id);
+        todoController.doingFrom(todo.id);
+
+        expect(
+          container.read(pomodoroControllerProvider).status,
+          PomodoroStatus.work,
+        );
+        expect(container.read(pomodoroControllerProvider).time, '15:00');
+      });
     });
 
     test('ポモドーロを休憩にすると、進行中のTODOがTODOに戻る', () {
