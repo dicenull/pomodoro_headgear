@@ -57,4 +57,14 @@ class TodoController extends _$TodoController {
         if (item.id == id) item.copyWith(status: TodoStatus.todo) else item,
     ];
   }
+
+  void restAllDoingTodo() {
+    state = [
+      for (final item in state)
+        if (item.status == TodoStatus.doing)
+          item.copyWith(status: TodoStatus.todo)
+        else
+          item,
+    ];
+  }
 }
