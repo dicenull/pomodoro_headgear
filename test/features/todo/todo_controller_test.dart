@@ -98,4 +98,28 @@ void main() {
 
     expect(subsc.read(), isEmpty);
   });
+
+  test('進行中のTODOだけTODOに戻せる', () {
+    final (subsc, controller) = buildSut();
+
+    controller
+      ..add('足し算ができる')
+      ..add('引き算ができる')
+      ..add('掛け算ができる');
+
+    final doingId = subsc.read().first.id;
+    final todoId = subsc.read().skip(1).first.id;
+    final doneId = subsc.read().skip(2).first.id;
+    controller
+      ..doingFrom(doingId)
+      ..todoFrom(todoId)
+      ..doneFrom(doneId);
+
+    controller.restAllDoingTodo();
+
+    expect(
+      subsc.read().map((v) => v.status),
+      [TodoStatus.todo, TodoStatus.todo, TodoStatus.done],
+    );
+  });
 }
