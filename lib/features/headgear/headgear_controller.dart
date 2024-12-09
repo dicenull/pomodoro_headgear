@@ -1,5 +1,6 @@
 import 'package:app/features/headgear/headgear_state.dart';
 import 'package:app/features/pomodoro/pomodoro_controller.dart';
+import 'package:app/features/pomodoro/pomodoro_state.dart';
 import 'package:app/features/todo/todo_controller.dart';
 import 'package:app/features/todo/todo_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -19,7 +20,17 @@ class HeadgearController extends _$HeadgearController {
       }
     });
 
-    ref.listen(pomodoroControllerProvider, (_, __) {});
+    ref.listen(
+        pomodoroControllerProvider
+            .select((v) => v.status == PomodoroStatus.rest), (_, isRest) {
+      if (isRest) {
+        ref.read(todoControllerProvider).forEach((todo) {
+          if (todo.status == TodoStatus.doing) {
+            ref.read(todoControllerProvider.notifier).todoFrom(todo.id);
+          }
+        });
+      }
+    });
 
     return HeadgearState();
   }
