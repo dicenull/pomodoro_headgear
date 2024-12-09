@@ -1,3 +1,4 @@
+import 'package:app/features/headgear/headgear_controller.dart';
 import 'package:app/features/pomodoro/pomodoro_timer.dart';
 import 'package:app/features/todo/todo_viewer.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ class HomePage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(headgearControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Title'),
