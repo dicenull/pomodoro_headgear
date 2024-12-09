@@ -1,5 +1,4 @@
 import 'package:app/features/headgear/headgear_controller.dart';
-import 'package:app/features/headgear/headgear_state.dart';
 import 'package:app/features/pomodoro/pomodoro_controller.dart';
 import 'package:app/features/pomodoro/pomodoro_state.dart';
 import 'package:app/features/todo/todo_controller.dart';
@@ -10,16 +9,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../create_container_test.dart';
 
 void main() {
-  group(HeadgearController, () {
-    (ProviderSubscription<HeadgearState>, ProviderContainer) buildSut() {
+  group(headgearControllerProvider, () {
+    ProviderContainer buildSut() {
       final container = createContainer();
-      final subsc = container.listen(headgearControllerProvider, (_, __) {});
+      container.listen(headgearControllerProvider, (_, __) {});
 
-      return (subsc, container);
+      return container;
     }
 
     test('TODOを進行中にしたらポモドーロが開始される', () {
-      final (subsc, container) = buildSut();
+      final container = buildSut();
       final todoController = container.read(todoControllerProvider.notifier)
         ..add('足し算');
       final todo = container.read(todoControllerProvider).first;
@@ -32,7 +31,7 @@ void main() {
     });
 
     test('ポモドーロを休憩にすると、進行中のTODOがTODOに戻る', () {
-      final (subsc, container) = buildSut();
+      final container = buildSut();
       final todoController = container.read(todoControllerProvider.notifier)
         ..add('足し算')
         ..add('引き算');
