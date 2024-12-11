@@ -11,13 +11,27 @@ class PomodoroTimer extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final status =
         ref.watch(pomodoroControllerProvider.select((v) => v.status));
+    final theme = Theme.of(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(status.label),
-        const Gap(16),
-        const _Timer(),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                status.label,
+                style: theme.textTheme.displaySmall,
+              ),
+              const Gap(16),
+              const _Timer(),
+            ],
+          ),
+        ),
         IconButton.filled(
           onPressed: () {
             if (status == PomodoroStatus.rest) {
@@ -44,7 +58,14 @@ class _Timer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final seconds = ref.watch(pomodoroControllerProvider.select((v) => v.time));
+    final theme = Theme.of(context);
 
-    return Text(seconds);
+    return Text(
+      seconds,
+      style: theme.textTheme.displaySmall?.copyWith(
+        fontFamily: 'Helvetica',
+      ),
+      textAlign: TextAlign.start,
+    );
   }
 }
