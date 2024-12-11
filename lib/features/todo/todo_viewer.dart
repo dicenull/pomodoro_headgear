@@ -9,13 +9,13 @@ class ToDoViewer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoList = ref.watch(todoControllerProvider);
     final textController = useTextEditingController();
     final focusNode = useFocusNode();
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 400),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             controller: textController,
@@ -27,9 +27,24 @@ class ToDoViewer extends HookConsumerWidget {
               focusNode.requestFocus();
             },
           ),
-          for (final todo in todoList) _TodoItem(todo: todo),
+          const Flexible(child: _TodoList()),
         ],
       ),
+    );
+  }
+}
+
+class _TodoList extends ConsumerWidget {
+  const _TodoList();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoList = ref.watch(todoControllerProvider);
+
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: todoList.length,
+      itemBuilder: (context, index) => _TodoItem(todo: todoList[index]),
     );
   }
 }

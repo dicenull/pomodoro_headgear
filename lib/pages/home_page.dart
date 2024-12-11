@@ -18,7 +18,9 @@ class HomePage extends HookConsumerWidget {
       body: const Column(
         children: [
           Center(child: PomodoroTimer()),
-          Center(child: ToDoViewer()),
+          Flexible(
+            child: ToDoViewer(),
+          ),
         ],
       ),
     );
