@@ -11,11 +11,8 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(headgearControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Title'),
-      ),
-      body: const Column(
+    return const Scaffold(
+      body: Column(
         children: [
           Center(child: PomodoroTimer()),
           Flexible(
