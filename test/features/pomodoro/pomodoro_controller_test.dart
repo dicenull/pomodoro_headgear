@@ -4,7 +4,7 @@ import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../create_container_test.dart';
+import '../../create_container.dart';
 
 void main() {
   (ProviderSubscription<PomodoroState>, PomodoroController) buildSut() {
