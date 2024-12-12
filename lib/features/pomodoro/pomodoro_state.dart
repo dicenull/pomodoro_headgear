@@ -32,7 +32,7 @@ enum PomodoroStatus {
       };
 
   int get duration => switch (this) {
-        PomodoroStatus.rest => 0,
+        PomodoroStatus.rest => 25 * 60,
         PomodoroStatus.work => 25 * 60,
         PomodoroStatus.shortBreak => 5 * 60,
       };
