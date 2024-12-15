@@ -109,8 +109,26 @@ class _InlineEditor extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = TextEditingController(text: item.title);
+    final controller = useTextEditingController(text: item.title);
     final focusNode = useFocusNode();
+
+    useEffect(
+      () {
+        void listener() {
+          if (!focusNode.hasFocus) {
+            ref
+                .read(todoControllerProvider.notifier)
+                .edit(item.id, title: controller.text);
+          }
+        }
+
+        focusNode.addListener(listener);
+        return () {
+          focusNode.removeListener(listener);
+        };
+      },
+      [focusNode],
+    );
 
     return TextField(
       controller: controller,
@@ -119,16 +137,6 @@ class _InlineEditor extends HookConsumerWidget {
         contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         hintText: 'タスク名',
       ),
-      onTapOutside: (event) {
-        ref
-            .read(todoControllerProvider.notifier)
-            .edit(item.id, title: controller.text);
-      },
-      onSubmitted: (newValue) {
-        ref
-            .read(todoControllerProvider.notifier)
-            .edit(item.id, title: controller.text);
-      },
     );
   }
 }
