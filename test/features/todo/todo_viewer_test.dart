@@ -1,4 +1,5 @@
 import 'package:app/features/todo/todo_viewer.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../create_container.dart';
@@ -7,7 +8,13 @@ import '../../widget_test_app.dart';
 void main() {
   testWidgets('$ToDoViewer TODOの追加から完了まで', (tester) async {
     final container = createContainer();
-    final widget = createTestWidget(container, const ToDoViewer());
+    final widget = createTestWidget(
+      container,
+      const SizedBox(
+        height: 500,
+        child: ToDoViewer(),
+      ),
+    );
 
     await tester.pumpWidget(widget);
 
